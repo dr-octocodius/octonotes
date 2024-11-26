@@ -1,15 +1,12 @@
 "use client";
+import { EditorContent } from "@tiptap/react";
+import type { Editor } from "@tiptap/core";
+interface TiptapProps {
+  editor: Editor | null;
+}
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-
-const Tiptap = () => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: "<p>Hello World! 🌎️</p>",
-  });
-
-  return <EditorContent className="w-full min-h-full" editor={editor} />;
+const Tiptap = ({ editor }: TiptapProps) => {
+  return <EditorContent editor={editor} />;
 };
 
 export default Tiptap;

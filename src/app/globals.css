@@ -61,3 +61,69 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Editor Styles */
+.ProseMirror {
+  @apply text-foreground;
+}
+
+.ProseMirror h1 {
+  @apply text-4xl font-bold text-foreground mb-4 mt-6;
+}
+
+.ProseMirror h2 {
+  @apply text-3xl font-semibold text-foreground mb-3 mt-5;
+}
+
+.ProseMirror h3 {
+  @apply text-2xl font-semibold text-foreground mb-2 mt-4;
+}
+
+.ProseMirror p {
+  @apply text-base leading-relaxed mb-2 text-foreground/90;
+}
+
+.ProseMirror ul {
+  @apply list-disc pl-6 mb-2;
+}
+
+.ProseMirror ol {
+  @apply list-decimal pl-6 mb-2;
+}
+
+.ProseMirror li {
+  @apply mb-1;
+}
+
+.ProseMirror blockquote {
+  @apply pl-4 border-l-4 border-primary/30 italic text-foreground/75 my-2;
+}
+
+.ProseMirror code {
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.ProseMirror pre {
+  @apply bg-muted p-4 rounded-lg my-2 overflow-x-auto;
+}
+
+.ProseMirror pre code {
+  @apply bg-transparent p-0 text-sm;
+}
+
+.ProseMirror a {
+  @apply text-primary hover:text-primary/80 underline underline-offset-2;
+}
+
+.ProseMirror hr {
+  @apply border-border my-4;
+}
+
+/* Placeholder (at the top) */
+p.is-editor-empty:first-child::before {
+  @apply text-foreground/50;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
