@@ -1,14 +1,12 @@
-import { Button } from "@/components/ui/button";
-import Greet from "./greet";
-import Link from "next/link";
+import Tiptap from "@/components/editor/tiptap";
+import AppContent from "@/components/global/app-content";
 
 export default function Home() {
   return (
-    <div className="">
-      <Link href="/test">
-        <Button>Button</Button>
-      </Link>
-      <Greet />
-    </div>
+    <main className="flex flex-col flex-auto">
+      <AppContent>
+        <Tiptap />
+      </AppContent>
+    </main>
   );
 }
