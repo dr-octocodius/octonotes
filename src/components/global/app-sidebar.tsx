@@ -5,17 +5,15 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarHeader,
-  SidebarInput,
 } from "@/components/ui/sidebar";
-import { File, Tree, Folder } from "../ui/file-tree";
-import { Settings, Search, ChevronsLeft } from "lucide-react";
+import { Settings, ChevronsLeft } from "lucide-react";
 import { Button } from "../ui/button";
 
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useSidebar } from "@/components/ui/sidebar";
 import NavDialog from "../navigation/nav-dialog";
 import { useState } from "react";
-import PlusItem from "../sidebar/plus-item";
+import Files from "../navigation/files";
 
 export function AppSidebar() {
   const [open, setOpen] = useState(false);
@@ -38,30 +36,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <div className="flex items-center gap-2 px-2 mb-2">
-            <SidebarInput placeholder="Search notes..." className="h-8" />
-            <Button variant="ghost" size="icon" className="h-8 w-8">
-              <Search className="h-4 w-4" />
-            </Button>
-          </div>
-          <div className="flex items-center justify-between pl-2 pr-3 py-2">
-            <span className="text-sm font-medium text-muted-foreground">
-              Notes
-            </span>
-            <PlusItem />
-          </div>
-          <Tree>
-            <Folder element="Personal" value="personal">
-              <File value="tasks">Tasks</File>
-              <File value="ideas">Ideas</File>
-              <File value="journal">Journal</File>
-            </Folder>
-            <Folder element="Work" value="work">
-              <File value="projects">Projects</File>
-              <File value="meetings">Meetings</File>
-              <File value="goals">Goals</File>
-            </Folder>
-          </Tree>
+          <Files />
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-4 border-t border-sidebar-border">
