@@ -5,9 +5,7 @@ import { FileText, FolderPlus, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
-interface PlusItemProps {}
-
-const PlusItem: FC<PlusItemProps> = ({}) => {
+const PlusItem: FC = ({}) => {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
 

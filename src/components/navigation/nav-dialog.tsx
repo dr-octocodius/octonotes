@@ -3,13 +3,12 @@ import type { FC } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
-import { FolderSearch, ShipWheel } from "lucide-react";
+import { FolderSearch } from "lucide-react";
 import { Input } from "../ui/input";
 
 interface NavDialogProps {

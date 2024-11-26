@@ -8,20 +8,8 @@ import {
   SidebarInput,
 } from "@/components/ui/sidebar";
 import { File, Tree, Folder } from "../ui/file-tree";
-import {
-  Settings,
-  Search,
-  Plus,
-  FileText,
-  FolderPlus,
-  ChevronsLeft,
-} from "lucide-react";
+import { Settings, Search, ChevronsLeft } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useSidebar } from "@/components/ui/sidebar";
