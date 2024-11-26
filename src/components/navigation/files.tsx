@@ -1,41 +1,27 @@
 import { FC, useEffect, useState, useCallback } from "react";
-import {
-  readDir,
-  mkdir,
-  BaseDirectory,
-  writeTextFile,
-  readTextFile,
-} from "@tauri-apps/plugin-fs";
+import { readDir, mkdir, BaseDirectory } from "@tauri-apps/plugin-fs";
 import { type DirEntry } from "@tauri-apps/plugin-fs";
 import { join } from "@tauri-apps/api/path";
-import { Search } from "lucide-react";
-import PlusItem from "../sidebar/plus-item";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { File, Tree, Folder } from "../ui/file-tree";
 import { Button } from "../ui/button";
 import { SidebarInput } from "../ui/sidebar";
+import { Search } from "lucide-react";
+import PlusItem from "../sidebar/plus-item";
 
 interface FilesProps {}
 
 interface ExtendedDirEntry extends DirEntry {
   children?: ExtendedDirEntry[];
-  position?: number;
-  id: string;
-}
-
-interface FileOrder {
-  [path: string]: number;
 }
 
 const NOTES_DIR = "notes";
-const FILE_ORDER_CONFIG = "file_order.json";
 
 const Files: FC<FilesProps> = ({}) => {
   const [files, setFiles] = useState<JSX.Element[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const loadFiles = useCallback(async () => {
     try {
@@ -67,6 +53,7 @@ const Files: FC<FilesProps> = ({}) => {
       });
 
       await processEntriesRecursively(dir, entries as ExtendedDirEntry[]);
+      setRefreshTrigger((prev) => prev + 1); // Trigger a refresh
     } catch (e) {
       console.error("Error loading files:", e);
       setError("Failed to load files. Please check permissions.");
@@ -74,6 +61,24 @@ const Files: FC<FilesProps> = ({}) => {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const entries = await readDir(NOTES_DIR, {
+          baseDir: BaseDirectory.AppData,
+        });
+        const fileTree = await renderFileTree(entries as ExtendedDirEntry[]);
+        setFiles(fileTree);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error reading directory:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchFiles();
+  }, [refreshTrigger]); // Add refreshTrigger as a dependency
 
   async function processEntriesRecursively(
     parent: string,
@@ -102,24 +107,6 @@ const Files: FC<FilesProps> = ({}) => {
       }
     }
   }
-
-  useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const entries = await readDir(NOTES_DIR, {
-          baseDir: BaseDirectory.AppData,
-        });
-        const fileTree = await renderFileTree(entries as ExtendedDirEntry[]);
-        setFiles(fileTree);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error reading directory:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchFiles();
-  }, []);
 
   const renderFileTree = async (entries: ExtendedDirEntry[]) => {
     return Promise.all(
